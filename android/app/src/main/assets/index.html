@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101a22" />
+  <meta name="description" content="Mesa Chess — a calm, modern chess room. Play locally or challenge the computer." />
+  <title>Mesa Chess — Play with intention</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Mesa Chess home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-name">MESA<span>CHESS</span></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="online-indicator"><i></i><span data-i18n="offlineReady">جاهز للعب</span></span>
+        <button class="icon-button" id="languageToggle" type="button" aria-label="Switch language">EN</button>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="eyebrow">مساحة هادئة لعقول استراتيجية</span></div>
+        <div class="hero-row">
+          <div>
+            <h1><span data-i18n="heroTitle">كل نقلة</span><em data-i18n="heroAccent">تصنع فرقًا.</em></h1>
+            <p data-i18n="heroCopy">ركّز، خطّط، واستمتع بالشطرنج على طريقتك.</p>
+          </div>
+          <div class="hero-note"><span class="note-star">✳</span><span data-i18n="heroNote">فكّر بهدوء.<br />العب بذكاء.</span></div>
+        </div>
+      </section>
+      <div class="workspace">
+        <section class="play-card">
+          <div class="play-card-head">
+            <div><div class="section-kicker"><span class="live-dot"></span><span data-i18n="boardLabel">رقعة اللعب</span></div><h2 data-i18n="matchTitle">المباراة الحالية</h2></div>
+            <div class="turn-chip" id="turnBadge"><span class="turn-dot"></span><span id="turnText">دور الأبيض</span></div>
+          </div>
+          <div class="board-stage">
+            <div class="board-frame"><div class="board" id="board" role="grid" aria-label="Chess board"></div></div>
+            <div class="board-side-label"><span data-i18n="boardSideTop">MESA CHESS CLUB</span><span class="vertical-rule"></span><span id="moveCounter">01 / 00</span></div>
+          </div>
+          <div class="board-bottom">
+            <div class="capture-group"><span class="capture-label" data-i18n="whiteCaptured">الأبيض أخذ</span><span class="captured-pieces" id="whiteCaptured">—</span></div>
+            <div class="capture-group capture-right"><span class="capture-label" data-i18n="blackCaptured">الأسود أخذ</span><span class="captured-pieces" id="blackCaptured">—</span></div>
+          </div>
+          <div class="board-actions">
+            <button class="soft-button" id="undoButton" type="button"><span class="button-symbol">↶</span><span data-i18n="undo">تراجع</span></button>
+            <button class="soft-button" id="flipButton" type="button"><span class="button-symbol">⇅</span><span data-i18n="flip">قلب الرقعة</span></button>
+            <button class="soft-button" id="newGameButton" type="button"><span class="button-symbol">＋</span><span data-i18n="newGame">مباراة جديدة</span></button>
+          </div>
+        </section>
+        <aside class="side-column">
+          <section class="info-card settings-card">
+            <div class="card-heading"><div><span class="section-kicker" data-i18n="setupKicker">إعداد المباراة</span><h2 data-i18n="setupTitle">اختر أسلوبك</h2></div><span class="settings-icon">⌘</span></div>
+            <label class="field-label" data-i18n="modeLabel">طريقة اللعب</label>
+            <div class="segmented">
+              <button type="button" class="segment active" data-mode="computer" data-i18n="vsComputer">ضد الكمبيوتر</button>
+              <button type="button" class="segment" data-mode="local" data-i18n="twoPlayers">لاعبان محليًا</button>
+            </div>
+            <div class="field-row">
+              <div class="field-block"><label class="field-label" for="colorSelect" data-i18n="sideLabel">لونك</label>
+                <select id="colorSelect" class="select-control"><option value="w" data-i18n="whiteSide">الأبيض</option><option value="b" data-i18n="blackSide">الأسود</option></select>
+              </div>
+              <div class="field-block" id="difficultyBlock"><label class="field-label" for="difficultySelect" data-i18n="levelLabel">المستوى</label>
+                <select id="difficultySelect" class="select-control"><option value="1" data-i18n="easy">سهل</option><option value="2" selected data-i18n="medium">متوسط</option><option value="3" data-i18n="hard">متقدم</option></select>
+              </div>
+            </div>
+            <div class="mode-hint" id="modeHint"><span class="hint-icon">✦</span><span>أنت تلعب بالأبيض. الكمبيوتر يلعب بالأسود.</span></div>
+          </section>
+          <section class="info-card status-card">
+            <div class="card-heading compact"><div><span class="section-kicker" data-i18n="statusKicker">حالة اللعب</span><h2 data-i18n="statusTitle">على الرقعة الآن</h2></div><span class="status-live" data-i18n="live">مباشر</span></div>
+            <div class="player-status"><div class="player-piece white-piece">♔</div><div class="player-meta"><strong id="whitePlayerName">الأبيض</strong><span id="whitePlayerSub">أنت</span></div><span class="player-turn" id="whiteTurnMark"></span></div>
+            <div class="player-divider"><span></span></div>
+            <div class="player-status"><div class="player-piece black-piece">♚</div><div class="player-meta"><strong id="blackPlayerName">الأسود</strong><span id="blackPlayerSub">الكمبيوتر</span></div><span class="player-turn" id="blackTurnMark"></span></div>
+            <div class="game-message" id="gameMessage" role="status" aria-live="polite"><span class="message-icon">◈</span><span>ابدأ أول نقلة لك.</span></div>
+          </section>
+          <section class="info-card moves-card">
+            <div class="card-heading compact"><div><span class="section-kicker" data-i18n="historyKicker">تسلسل المباراة</span><h2 data-i18n="historyTitle">سجل النقلات</h2></div><span class="move-count" id="historyCount">0</span></div>
+            <div class="move-table-head"><span data-i18n="moveNumber">#</span><span data-i18n="whiteMove">الأبيض</span><span data-i18n="blackMove">الأسود</span></div>
+            <div class="move-list" id="moveList"><div class="empty-history" data-i18n="emptyHistory">ستظهر النقلات هنا بعد بداية المباراة.</div></div>
+          </section>
+        </aside>
+      </div>
+      <section class="tip-strip"><span class="tip-mark">✳</span><p><strong data-i18n="tipTitle">نصيحة صغيرة</strong><span data-i18n="tipCopy">قبل كل نقلة، اسأل نفسك: ماذا يهدد خصمي؟</span></p><span class="tip-index">M / 01</span></section>
+    </main>
+    <footer class="footer"><span>© 2026 MESA CHESS</span><span data-i18n="footerText">صُمّم للتركيز، وصُنع للاستمتاع.</span><span class="footer-mark">♞</span></footer>
+  </div>
+</body>
+</html>
