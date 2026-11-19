@@ -1,19 +1,21 @@
 package com.mesachess.app
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.JsResult
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.webkit.WebViewAssetLoader
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -35,7 +37,22 @@ class MainActivity : AppCompatActivity() {
             settings.allowContentAccess = false
             settings.javaScriptCanOpenWindowsAutomatically = false
             settings.mediaPlaybackRequiresUserGesture = true
-            webChromeClient = WebChromeClient()
+            webChromeClient = object : WebChromeClient() {
+                override fun onJsConfirm(
+                    view: WebView?,
+                    url: String?,
+                    message: String?,
+                    result: JsResult?
+                ): Boolean {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setMessage(message ?: "Start a new game?")
+                        .setPositiveButton(android.R.string.ok) { _, _ -> result?.confirm() }
+                        .setNegativeButton(android.R.string.cancel) { _, _ -> result?.cancel() }
+                        .setOnCancelListener { result?.cancel() }
+                        .show()
+                    return true
+                }
+            }
             webViewClient = object : WebViewClient() {
                 override fun shouldInterceptRequest(
                     view: WebView,
