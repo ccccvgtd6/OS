@@ -78,7 +78,7 @@ function renderBoard(){
     for(let col=0;col<8;col++){
       const square = algebraicAt(row,col);
       const piece = board[8-Number(square[1])][files.indexOf(square[0])];
-      const isLight = (files.indexOf(square[0]) + Number(square[1])) % 2 !== 0;
+      const isLight = (files.indexOf(square[0]) + Number(square[1])) % 2 === 0;
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'square ' + (isLight ? 'light' : 'dark');
